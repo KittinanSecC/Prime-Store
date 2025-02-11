@@ -1,0 +1,321 @@
+* {
+    font-family: 'Kanit', 'serif';
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #ffffff;
+}
+
+.top-bar {
+    background-color: #f5f5f5;
+    /* สีเทาอ่อนแบบในภาพ */
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 13px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /* ใช้ฟอนต์ที่คล้าย Nike */
+    font-size: 12px;
+    font-weight: bold;
+    /* ทำให้ตัวอักษรหนา */
+    padding-right: 40px;
+    /* เพิ่มระยะห่างด้านขวา */
+}
+
+.top-bar a {
+    text-decoration: none;
+    color: black;
+    padding: 0 2px;
+    font-weight: bold;
+}
+
+.top-bar a:not(:last-child)::after {
+    content: '|';
+    /* เพิ่มเส้นคั่น */
+    margin-left: 6px;
+    margin-right: 6px;
+    /* เพิ่มระยะห่างระหว่างเส้นกับข้อความ */
+    color: black;
+    /* สีของเส้น */
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFFFFF;
+    color: #fff;
+    padding: 1px 2px;
+    /* ลด padding ด้านบนและล่าง */
+    height: 60px;
+    /* ลดความสูงของ header */
+    padding-right: 40px;
+}
+
+header .logo img {
+    height: 60px;
+    width: auto;
+    flex-shrink: 0;
+    /* ป้องกันโลโก้หดตัว */
+    padding-left: 35px;
+}
+
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+header nav ul li {
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+header nav ul li a:hover {
+    text-decoration: none;
+    /* ปิด underline เดิม */
+    border-bottom: 3px solid rgb(0, 0, 0);
+    /* เพิ่มเส้นแทน underline */
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 150px;
+    width: 100%;
+    border-radius: 30px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 4px 8px;
+    transition: all 0.3s ease-in-out;
+
+}
+
+.search-bar input {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 25px;
+    font-size: 16px;
+    color: #333;
+    transition: 0.3s ease;
+    background-color: #f5f5f5;
+    font-weight: bold;
+    padding-left: 1px;
+}
+
+.search-bar input:focus {
+    border: 1px solid #646464;
+    /* Change border color when focused */
+    box-shadow: 0 0 5px rgba(107, 107, 107, 0.5);
+    /* Add glow effect */
+}
+
+.search-bar button {
+    background-color: #f5f5f5;
+    border: none;
+    padding: 5px 8px;
+    margin-right: 5px;
+    border-radius: 50%;
+    color: #646464;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+    background-color: #b0b4b0;
+}
+
+.search-bar button i {
+    font-size: 18px;
+}
+
+.hero {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.hero img {
+    max-width: 100%;
+    display: block;
+    margin: 10px auto;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #000;
+    /* สีดำ */
+    color: #fff;
+    /* ตัวหนังสือสีขาว */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    /* ทำให้ปุ่มมน */
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #333;
+    /* เปลี่ยนสีเมื่อโฮเวอร์ */
+}
+
+.hero h1 {
+    margin-top: 20px;
+    font-size: 2.5rem;
+}
+
+.brand-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.brand-logos a img {
+    height: 100px;
+    margin: 0 15px;
+    transition: transform 0.3s ease;
+}
+
+.brand-logos a img:hover {
+    transform: scale(1.1);
+}
+
+.carousel-section {
+    padding: 20px;
+    background-color: #eee;
+    text-align: center;
+}
+
+.carousel-section h2 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.carousel {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    text-align: center;
+}
+
+.carousel-item img {
+    height: 150px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.carousel-item img:hover {
+    transform: scale(1.1);
+}
+
+
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    margin-top: 80px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.footer-column h4 {
+    margin-bottom: 10px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin: 5px 0;
+}
+
+.footer-column ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-column ul li a:hover {
+    text-decoration: underline;
+}
+
+
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.social-links .social-icon {
+    color: #fff;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.social-links .social-icon:hover {
+    color: #00aaff;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+}
+
+.products {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.product {
+    width: 30%;
+
+}
+
+.product img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.product p {
+    font-weight: 900;
+    margin-top: 10px;
+}
