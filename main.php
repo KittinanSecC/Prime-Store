@@ -47,15 +47,20 @@ include("structure.php");
         #promo-banner {
             background: #f5f5f5;
             color: black;
-            text-align: center;
-            padding: 10px;
-            font-size: 16px;
+           
+            margin-bottom:10px;
+            font-size: 18px;
 
             position: relative;
             /* เปลี่ยนจาก fixed เป็น relative */
             width: 100%;
             z-index: 1000;
         }
+        #promo-text {
+        white-space: pre-line; /* ทำให้ \n มีผล */
+        text-align: center; /* จัดตรงกลาง */
+        font-size: 18px;
+    }
     </style>
 </head>
 
@@ -67,22 +72,22 @@ include("structure.php");
         <p id="promo-text"></p>
     </div>
     <script>
-        const promos = [
-            "ยินด้อนรับ !",
-            "Prime Sneakers Store",
-            "Welcome to Prime"
-        ];
+    const promos = [
+        "ยินดีต้อนรับสู่\nPrime Sneakers Store",
+        "ชีวิตที่ใช่\nรองเท้าที่ชอบ",
+        "เหนือระดับ\nทุกเสต็ป"
+    ];
 
-        let index = 0;
+    let index = 0;
 
-        function updatePromo() {
-            document.getElementById("promo-text").textContent = promos[index];
-            index = (index + 1) % promos.length;
-        }
+    function updatePromo() {
+        document.getElementById("promo-text").textContent = promos[index];
+        index = (index + 1) % promos.length;
+    }
 
-        setInterval(updatePromo, 3000); // เปลี่ยนข้อความทุก 3 วินาที
-        updatePromo(); // แสดงข้อความแรกทันที
-    </script>
+    setInterval(updatePromo, 3000); // เปลี่ยนข้อความทุก 3 วินาที
+    updatePromo(); // แสดงข้อความแรกทันที
+</script>
     <!-- billbord -->
     <section id="video-background" class="video-container">
         <a href="upload3.php">
