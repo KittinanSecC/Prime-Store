@@ -52,10 +52,11 @@ include("structure.php");
     <!-- Filter and Sort Section -->
     <div class="filter-sort">
         <select id="sort-options">
-            <option value="price-asc">ราคาต่ำไปสูง</option>
-            <option value="price-desc">ราคาสูงไปต่ำ</option>
             <option value="name-asc">ชื่อ A-Z</option>
             <option value="name-desc">ชื่อ Z-A</option>
+            <option value="price-asc">ราคาต่ำไปสูง</option>
+            <option value="price-desc">ราคาสูงไปต่ำ</option>
+
         </select>
     </div>
 

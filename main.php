@@ -27,7 +27,6 @@ include("structure.php");
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <style>
-
         .slider {
             display: flex;
             justify-content: center;
@@ -44,6 +43,19 @@ include("structure.php");
             opacity: 1;
             transform: scale(1.2);
         }
+
+        #promo-banner {
+            background: #f5f5f5;
+            color: black;
+            text-align: center;
+            padding: 10px;
+            font-size: 16px;
+
+            position: relative;
+            /* เปลี่ยนจาก fixed เป็น relative */
+            width: 100%;
+            z-index: 1000;
+        }
     </style>
 </head>
 
@@ -51,6 +63,26 @@ include("structure.php");
     <?php
     renderHeader($conn)
     ?>
+    <div id="promo-banner">
+        <p id="promo-text"></p>
+    </div>
+    <script>
+        const promos = [
+            "ยินด้อนรับ !",
+            "Prime Sneakers Store",
+            "Welcome to Prime"
+        ];
+
+        let index = 0;
+
+        function updatePromo() {
+            document.getElementById("promo-text").textContent = promos[index];
+            index = (index + 1) % promos.length;
+        }
+
+        setInterval(updatePromo, 3000); // เปลี่ยนข้อความทุก 3 วินาที
+        updatePromo(); // แสดงข้อความแรกทันที
+    </script>
     <!-- billbord -->
     <section id="video-background" class="video-container">
         <a href="upload3.php">
