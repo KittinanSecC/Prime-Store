@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['favorite'])) {
             width: 80px;
             height: 80px;
             object-fit: cover;
-            background-color: #f5f5f5;
+            background-color:#FAFAFA;
             padding: 5px;
             border-radius: 8px;
             transition: 0.3s;
