@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['favorite'])) {
             width: 80px;
             height: 80px;
             object-fit: cover;
-            background-color:#FAFAFA;
+            background-color: #FAFAFA;
             padding: 5px;
             border-radius: 8px;
             transition: 0.3s;
@@ -252,9 +252,12 @@ renderHeader($conn);
                 </script>
                 <div class="favorite-button">
                     <button id="favorite-btn" data-product-id="<?= $id ?>" class="favorite <?= $is_favorite ? 'active' : '' ?>">
-                        <i id="heart-icon" class="fa fa-heart" style="color: <?= $is_favorite ? 'red' : 'gray' ?>;"></i>
+                        <i id="heart-icon" class="<?= $is_favorite ? 'fa fa-heart' : 'fa-regular fa-heart' ?>"
+                            style="color: <?= $is_favorite ? 'red' : 'gray' ?>;">
+                        </i>
                         <span id="favorite-text"><?= $is_favorite ? 'ลบจากรายการโปรด' : 'เพิ่มในรายการโปรด' ?></span>
                     </button>
+
                 </div>
 
                 <div class="description">
@@ -320,10 +323,16 @@ renderHeader($conn);
                             console.log(data);
 
                             if (data.includes("✅")) {
+                                // เพิ่มในรายการโปรด -> ไอคอนสีแดง
+                                heartIcon.classList.remove("fa-regular", "fa-heart");
+                                heartIcon.classList.add("fa", "fa-heart");
                                 heartIcon.style.color = "red";
                                 favoriteText.textContent = "ลบจากรายการโปรด";
                                 favoriteBtn.classList.add("active");
                             } else if (data.includes("❌")) {
+                                // ลบออกจากรายการโปรด -> ไอคอนเส้นขอบสีเทา
+                                heartIcon.classList.remove("fa", "fa-heart");
+                                heartIcon.classList.add("fa-regular", "fa-heart");
                                 heartIcon.style.color = "gray";
                                 favoriteText.textContent = "เพิ่มในรายการโปรด";
                                 favoriteBtn.classList.remove("active");
