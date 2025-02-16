@@ -47,8 +47,8 @@ include("structure.php");
         #promo-banner {
             background: #f5f5f5;
             color: black;
-           
-            margin-bottom:10px;
+            padding: 5px;
+            margin-bottom:1px;
             font-size: 18px;
 
             position: relative;
@@ -57,6 +57,7 @@ include("structure.php");
             z-index: 1000;
         }
         #promo-text {
+        margin-bottom:1px;
         white-space: pre-line; /* ทำให้ \n มีผล */
         text-align: center; /* จัดตรงกลาง */
         font-size: 18px;
@@ -74,8 +75,9 @@ include("structure.php");
     <script>
     const promos = [
         "ยินดีต้อนรับสู่\nPrime Sneakers Store",
-        "ชีวิตที่ใช่\nรองเท้าที่ชอบ",
-        "เหนือระดับ\nทุกเสต็ป"
+        "ชีวิตที่ใช่  รองเท้าที่ชอบ\nกับ Prime",
+        "ชีวิตที่ใช่  รองเท้าที่ชอบ\nค่าส่ง 150 บาท ทุกคู่",
+        "เหนือระดับ ทุกเสต็ป\nBy Prime Sneakers"
     ];
 
     let index = 0;
@@ -85,7 +87,7 @@ include("structure.php");
         index = (index + 1) % promos.length;
     }
 
-    setInterval(updatePromo, 3000); // เปลี่ยนข้อความทุก 3 วินาที
+    setInterval(updatePromo, 5000); // เปลี่ยนข้อความทุก 3 วินาที
     updatePromo(); // แสดงข้อความแรกทันที
 </script>
     <!-- billbord -->

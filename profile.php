@@ -38,7 +38,6 @@ $user = $result->fetch_assoc();
 
     <title>หน้าโพรไฟล์</title>
     <style>
-        
         .row {
             width: 100%;
 
@@ -134,6 +133,66 @@ $user = $result->fetch_assoc();
             padding-right: 20px;
             border-radius: 20px;
         }
+
+        /* Adjust the custom card size */
+        .custom-card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 200px;
+            /* Reduce card width */
+            margin: auto;
+            /* จัดให้อยู่ตรงกลาง */
+            /* Add margin between cards */
+        }
+
+        /* Adjust the image size within the card */
+        .card-img-top {
+            object-fit: cover;
+            height: 300px;
+            /* Reduce image height */
+            width: 100%;
+            /* Keep image width to 100% */
+        }
+
+        /* Reduce the card body padding */
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        /* Make card title font smaller */
+        .card-title {
+            min-height: 50px;
+            /* กำหนดความสูงขั้นต่ำให้ชื่อสินค้าเท่ากัน */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Adjust the price font size */
+        .card-price {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        /* Adjust the button size */
+        .custom-btn {
+            font-size: 14px;
+            /* Smaller button text */
+            padding: 8px 15px;
+            /* Smaller padding */
+        }
+
+        .text-truncate {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 </head>
 
@@ -179,14 +238,47 @@ $user = $result->fetch_assoc();
                 <a href="successshow.php"><button type="button" class="btn btn-dark btn-sm margin2 butt1">
                         ประวัติการสั่งซื้อ
                     </button></a>
-                    <?php
-                    if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == 0) 
+                <?php
+                if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == 0)
                     echo '<a href="upload1.php"><button type="button" class="btn btn-dark btn-sm margin2 butt1">
                         เพิ่มสินค้า
                     </button></a>'
-                    ?>
-                
+                ?>
+
             </div>
+        </div>
+        <div class="profile-title">รายการโปรดของคุณ</div>
+        <div class="row">
+            <?php
+            $sql = "SELECT p.ID, p.Name, p.Price, p.FilesName
+            FROM favorites f
+            JOIN product p ON f.product_id = ID
+            WHERE f.user_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $loggedIn);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<div class="col-md-4 d-flex align-items-stretch mb-4">';
+                    echo '<a href="product-detail.php?id=' . $row["ID"] . '" class="card-link text-decoration-none" style="color: black;">';
+                    echo '<div class="card custom-card shadow-sm w-100">';
+                    echo '<img src="myfile/' . htmlspecialchars($row["FilesName"]) . '" class="card-img-top" alt="Product Image">';
+                    echo '<div class="card-body d-flex flex-column">';
+                    echo '<h5 class="card-title text-center text-truncate" style="min-height: 50px;">' . htmlspecialchars($row["Name"]) . '</h5>';
+                    echo '<div class="mt-auto text-center">';
+                    echo '<a href="product-detail.php?id=' . $row["ID"] . '"> </a>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</a>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<p class="text-center text-muted">ยังไม่มีรายการโปรด</p>';
+            }
+            ?>
         </div>
 
         <!-- Modal -->
@@ -263,6 +355,7 @@ $user = $result->fetch_assoc();
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </div>
     </div>
+
 
     <?php
     renderFooter();

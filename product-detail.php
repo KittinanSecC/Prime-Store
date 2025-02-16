@@ -29,6 +29,28 @@ $images = array_filter([$product['FilesName'], $product['FilesName2'], $product[
 
 // แปลงค่าเพศเป็นข้อความภาษาไทย
 $gender_text = ($product['Gender'] === 'Men') ? "รองเท้าผู้ชาย" : "รองเท้าผู้หญิง";
+
+
+// เพิ่มฟังก์ชันการจัดการรายการโปรด
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['favorite'])) {
+    if (!isset($_SESSION['favorites'])) {
+        $_SESSION['favorites'] = [];
+    }
+
+    // ตรวจสอบว่าสินค้าอยู่ในรายการโปรดแล้วหรือไม่
+    if (in_array($id, $_SESSION['favorites'])) {
+        // หากมีอยู่แล้ว ให้ลบออก
+        $_SESSION['favorites'] = array_diff($_SESSION['favorites'], [$id]);
+        $message = "\u274c ลบสินค้าจากรายการโปรดเรียบร้อย!";
+    } else {
+        // หากยังไม่มี ให้เพิ่มเข้าไป
+        $_SESSION['favorites'][] = $id;
+        $message = "\u2714\ufe0f เพิ่มสินค้าในรายการโปรดเรียบร้อย!";
+    }
+
+    echo "<script>alert('$message'); window.location.href='product.php?id=$id';</script>";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +60,7 @@ $gender_text = ($product['Gender'] === 'Men') ? "รองเท้าผู้�
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($product['Name']) ?></title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/logo/Prime2.png" rel="icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -140,7 +162,36 @@ $gender_text = ($product['Gender'] === 'Men') ? "รองเท้าผู้�
             color: white !important;
             /* ตัวหนังสือขาว */
         }
+
+        .favorite {
+            background-color: transparent;
+            border: none;
+            color: gray;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        .favorite .fa-heart {
+            transition: color 0.3s ease;
+        }
+
+        .favorite.active .fa-heart {
+            color: red;
+        }
     </style>
+    <?php
+    // ตรวจสอบว่าสินค้านี้อยู่ในรายการโปรดของผู้ใช้หรือไม่
+    $is_favorite = false;
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+        $sql_check_fav = "SELECT * FROM favorites WHERE user_id = ? AND product_id = ?";
+        $stmt = $conn->prepare($sql_check_fav);
+        $stmt->bind_param("ii", $user_id, $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $is_favorite = $result->num_rows > 0;
+    }
+    ?>
 
 </head>
 <?php
@@ -199,9 +250,13 @@ renderHeader($conn);
                         });
                     });
                 </script>
-                <button class="btn wishlist-btn w-100 btn-light" style="border: 1px solid;">
-                    รายการโปรด <i class="far fa-heart"></i>
-                </button>
+                <div class="favorite-button">
+                    <button id="favorite-btn" data-product-id="<?= $id ?>" class="favorite <?= $is_favorite ? 'active' : '' ?>">
+                        <i id="heart-icon" class="fa fa-heart" style="color: <?= $is_favorite ? 'red' : 'gray' ?>;"></i>
+                        <span id="favorite-text"><?= $is_favorite ? 'ลบจากรายการโปรด' : 'เพิ่มในรายการโปรด' ?></span>
+                    </button>
+                </div>
+
                 <div class="description">
                     <h4>รายละเอียดสินค้า</h4>
                     <p><?= nl2br(htmlspecialchars($product['Description'])) ?></p>
@@ -243,6 +298,45 @@ renderHeader($conn);
                     }
                 });
             </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const favoriteBtn = document.getElementById("favorite-btn");
+                    const heartIcon = document.getElementById("heart-icon");
+                    const favoriteText = document.getElementById("favorite-text");
+
+                    favoriteBtn.addEventListener("click", async function() {
+                        const productId = this.getAttribute("data-product-id");
+
+                        try {
+                            const response = await fetch("toggle_favorite.php", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/x-www-form-urlencoded",
+                                },
+                                body: `product_id=${encodeURIComponent(productId)}`,
+                            });
+
+                            const data = await response.text();
+                            console.log(data);
+
+                            if (data.includes("✅")) {
+                                heartIcon.style.color = "red";
+                                favoriteText.textContent = "ลบจากรายการโปรด";
+                                favoriteBtn.classList.add("active");
+                            } else if (data.includes("❌")) {
+                                heartIcon.style.color = "gray";
+                                favoriteText.textContent = "เพิ่มในรายการโปรด";
+                                favoriteBtn.classList.remove("active");
+                            }
+
+                        } catch (error) {
+                            console.error("Error:", error);
+                            alert("❌ ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+                        }
+                    });
+                });
+            </script>
+
 
 
 
