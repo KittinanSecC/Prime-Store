@@ -36,7 +36,7 @@ include("structure.php");
 <body>
     <?php renderHeader($conn); ?>
 
-    <div class="container mt-4">
+    <div class="container mt-4 center">
         <div class="row">
             <!-- Sidebar -->
             <div class="col-md-3">
@@ -117,14 +117,14 @@ include("structure.php");
 
                     while ($objResult = mysqli_fetch_array($objQuery)) {
                     ?>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-4 mb-3 col-sm-6">
                             <a href="product-detail.php?id=<?= $objResult['ID']; ?>" class="text-decoration-none text-dark">
                                 <div class="card h-100" style="border: 0px; border-radius:0px;">
                                     <img src="myfile/<?= htmlspecialchars($objResult["FilesName"]); ?>" style="background-color:#FAFAFA;" class="card-img-top" alt="<?= htmlspecialchars($objResult["Name"]); ?>">
                                     <div class="card-body text-start">
-                                        <h5 class="card-title"><?= htmlspecialchars($objResult["Name"]); ?></h5>
-                                        <p class="card-text"><?= $objResult["Gender"] == "Men" ? "รองเท้าผู้ชาย" : "รองเท้าผู้หญิง"; ?></p>
-                                        <p class="card-text">฿<?= number_format($objResult["Price"]); ?></p>
+                                        <h5 class="card-title" style="font-size:small;"><?= htmlspecialchars($objResult["Name"]); ?></h5>
+                                        <p class="card-text" style="font-size:small;"><?= $objResult["Gender"] == "Men" ? "รองเท้าผู้ชาย" : "รองเท้าผู้หญิง"; ?></p>
+                                        <p class="card-text" style="font-size:small;">฿<?= number_format($objResult["Price"]); ?></p>
                                     </div>
                                 </div>
                             </a>
