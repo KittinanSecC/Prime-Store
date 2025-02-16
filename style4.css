@@ -5,7 +5,7 @@
     padding: 20px;
     justify-content: center;
 }
-
+/*
 .product-card {
     width: 250px;
     border: 1px solid #ddd;
@@ -20,7 +20,7 @@
 
 .product-card:hover {
     transform: translateY(-5px);
-    color: inherit; /* ป้องกันการเปลี่ยนสีเมื่อเอาเมาส์ไปวาง */
+    color: inherit; 
 }
 
 .product-image {
@@ -41,13 +41,13 @@
     color: #555;
 }
 .product-card a {
-    text-decoration: none; /* เอาเส้นใต้ลิงก์ออก */
-    color: inherit; /* ใช้สีเดียวกับข้อความปกติ */
-    display: block; /* ทำให้ทั้งการ์ดคลิกได้ */
+    text-decoration: none;
+    color: inherit; 
+    display: block; 
 }
 
 .product-card a:hover {
-    color: inherit; /* ป้องกันการเปลี่ยนสีเมื่อเอาเมาส์ไปวาง */
+    color: inherit; 
 }
 
 
