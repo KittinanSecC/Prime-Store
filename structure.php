@@ -63,16 +63,10 @@ function renderHeader($conn)
     echo '<button id="search-button"><i class="fa fa-search"></i></button>';
     echo '<input type="text" placeholder="ค้นหา" id="search-input">';
     echo '</div>';
-    
+
 
     echo '</header>';
 }
-
-
-
-
-
-
 
 function renderFooter()
 {
@@ -140,3 +134,21 @@ function renderFooter()
 </footer>';
 }
 ?>
+<style>
+    ::-webkit-scrollbar {
+        height: 5px;
+        width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #fff;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(45deg, #000, #000);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+</style>

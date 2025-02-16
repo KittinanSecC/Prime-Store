@@ -48,7 +48,6 @@ $user = $result->fetch_assoc();
             display: flex;
             flex-direction: column;
             box-shadow: #ccc;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
             gap: 20px;
         }
 
@@ -59,7 +58,6 @@ $user = $result->fetch_assoc();
             text-align: left;
 
         }
-
 
         .proinfo {
             margin-bottom: 0.5rem;
@@ -154,15 +152,6 @@ $user = $result->fetch_assoc();
             width: 100%;
             /* Keep image width to 100% */
         }
-
-        /* Reduce the card body padding */
-        .card-body {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-        }
-
         /* Make card title font smaller */
         .card-title {
             min-height: 50px;
@@ -170,7 +159,7 @@ $user = $result->fetch_assoc();
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
+            text-align: start;
         }
 
         /* Adjust the price font size */
@@ -247,12 +236,13 @@ $user = $result->fetch_assoc();
 
             </div>
         </div>
+        <style></style>
         <div class="profile-title">รายการโปรดของคุณ</div>
-        <div class="row">
+        <div class="row flex-column overflow-auto mb-1" style="max-height: 500px;">
             <?php
-            $sql = "SELECT p.ID, p.Name, p.Price, p.FilesName
+            $sql = "SELECT p.ID, p.Name, p.Price, p.FilesName, p.Gender
             FROM favorites f
-            JOIN product p ON f.product_id = ID
+            JOIN product p ON f.product_id = p.ID
             WHERE f.user_id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $loggedIn);
@@ -261,15 +251,14 @@ $user = $result->fetch_assoc();
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo '<div class="col-md-4 d-flex align-items-stretch mb-4">';
-                    echo '<a href="product-detail.php?id=' . $row["ID"] . '" class="card-link text-decoration-none" style="color: black;">';
-                    echo '<div class="card custom-card shadow-sm w-100">';
-                    echo '<img src="myfile/' . htmlspecialchars($row["FilesName"]) . '" class="card-img-top" alt="Product Image">';
-                    echo '<div class="card-body d-flex flex-column">';
-                    echo '<h5 class="card-title text-center text-truncate" style="min-height: 50px;">' . htmlspecialchars($row["Name"]) . '</h5>';
-                    echo '<div class="mt-auto text-center">';
-                    echo '<a href="product-detail.php?id=' . $row["ID"] . '"> </a>';
-                    echo '</div>';
+                    echo '<div class="col-lg-4 col-md-5 mb-3 col-sm-6">';
+                    echo '<a href="product-detail.php?id=' . $row["ID"] . '" class="text-decoration-none text-dark">';
+                    echo '<div class="card h-100" style="border: 0px; border-radius:0px;">';
+                    echo '<img src="myfile/' . htmlspecialchars($row["FilesName"]) . '" style="background-color:#FAFAFA;" class="card-img-top" alt="' . htmlspecialchars($row["Name"]) . '">';
+                    echo '<div class="card-body text-start">';
+                    echo '<h5 class="card-title" style="font-size:small;">' . htmlspecialchars($row["Name"]) . '</h5>';
+                    echo '<p class="card-text" style="font-size:small;">' . ($row["Gender"] == "Men" ? "รองเท้าผู้ชาย" : "รองเท้าผู้หญิง") . '</p>';
+                    echo '<p class="card-text" style="font-size:small;">฿' . number_format($row["Price"]) . '</p>';
                     echo '</div>';
                     echo '</div>';
                     echo '</a>';
@@ -280,6 +269,8 @@ $user = $result->fetch_assoc();
             }
             ?>
         </div>
+
+
 
         <!-- Modal -->
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
